@@ -6,8 +6,6 @@ const router = express.Router();
 
 router.get("/", (_req, res) => {
   const data = patientService.getPatientEntries();
-  // const data = patientService.getNonSensitivePatientEntry();
-  // console.log("-------data: ", data);
   res.send(data);
 });
 
@@ -22,18 +20,6 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  // add new data without safe parsing, validation and type predicate
-  // const { name, dateOfBirth, ssn, gender, occupation } = req.body;
-  // const addEntry = patientService.addPatient({
-  //   name,
-  //   dateOfBirth,
-  //   ssn,
-  //   gender,
-  //   occupation,
-  // });
-  // res.json(addEntry);
-
-  // add new data with safe parsing, validation and type predicate
   try {
     const newPatientEntry = toNewPatient(req.body);
     const addedEntry = patientService.addPatient(newPatientEntry);

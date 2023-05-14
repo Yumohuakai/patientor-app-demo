@@ -1,8 +1,4 @@
-import {
-  Gender,
-  NewPatient,
-  // Diagnosis
-} from "./types";
+import { Gender, NewPatient } from "./types";
 
 const errorMsg = "Incorrect or missing";
 
@@ -38,18 +34,8 @@ const parseGender = (gender: unknown): Gender => {
   if (!gender || !isString(gender) || !isGender(gender)) {
     throw new Error(`${errorMsg} gender ${gender}`);
   }
-  console.log("-----parseGender------gender: ", typeof gender, gender);
   return gender;
 };
-
-// const parseDiagnosisCodes = (object: unknown): Array<Diagnosis["code"]> => {
-//   if (!object || typeof object !== "object" || !("diagnosisCodes" in object)) {
-//     // we will just trust the data to be in correct form
-//     return [] as Array<Diagnosis["code"]>;
-//   }
-
-//   return object.diagnosisCodes as Array<Diagnosis["code"]>;
-// };
 
 const toNewPatient = (object: unknown): NewPatient => {
   if (!object || typeof object !== "object") {
@@ -75,7 +61,5 @@ const toNewPatient = (object: unknown): NewPatient => {
   }
   throw new Error("Incorrect data: some fields are missing");
 };
-
-// const toNewEntry
 
 export default toNewPatient;
