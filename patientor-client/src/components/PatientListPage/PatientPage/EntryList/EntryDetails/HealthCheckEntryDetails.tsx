@@ -6,8 +6,6 @@ import { SvgIconProps } from "@mui/material";
 import DiagnosisList from "./DiagnosisList";
 
 const HealthCheckEntryDetails = ({ entry }: { entry: HealthCheckEntry }) => {
-  //   console.log("------entry: ", entry.healthCheckRating);
-
   const getHealthCheckRatingIcon = (
     rating: HealthCheckRating
   ): React.ReactElement<SvgIconProps> | null => {
@@ -26,7 +24,6 @@ const HealthCheckEntryDetails = ({ entry }: { entry: HealthCheckEntry }) => {
 
   return (
     <div className="entry">
-      {/* <p>HealthCheckEntryDetails</p> */}
       <p>
         {entry.date} <MedicalInformationIcon />
       </p>

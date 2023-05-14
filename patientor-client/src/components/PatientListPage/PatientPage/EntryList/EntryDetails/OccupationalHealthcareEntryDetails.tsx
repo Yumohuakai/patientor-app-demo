@@ -10,7 +10,6 @@ const OccupationalHealthcareEntryDetails = ({
 }) => {
   return (
     <div className="entry">
-      {/* <p>OccupationalHealthcareEntryDetails</p> */}
       <p>
         {entry.date} <BusinessCenterIcon /> <i>{entry.employerName}</i>
       </p>

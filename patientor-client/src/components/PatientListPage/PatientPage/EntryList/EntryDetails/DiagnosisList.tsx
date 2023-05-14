@@ -7,7 +7,6 @@ const DiagnosisList = ({
 }: {
   diagnosisCodes: Array<Diagnosis["code"]>;
 }) => {
-  console.log("------diagnosisCodes: ", diagnosisCodes);
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
 
   useEffect(() => {

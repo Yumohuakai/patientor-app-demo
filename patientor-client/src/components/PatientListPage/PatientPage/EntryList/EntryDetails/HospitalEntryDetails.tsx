@@ -6,7 +6,6 @@ import DiagnosisList from "./DiagnosisList";
 const HospitalEntryDetails = ({ entry }: { entry: HospitalEntry }) => {
   return (
     <div className="entry">
-      {/* <p>HospitalEntryDetails</p> */}
       <p>
         {entry.date} <VaccinesIcon />{" "}
       </p>
