@@ -7,8 +7,8 @@ The project **patientor-app** is part of the exercises from [Full Stack Open onl
 
 It is still in the _development_.
 
-## Programming language / Framework / Library / Technology
+### Programming language / Framework / Library / Technology
 
-Both frontend and backend are written with **TypeScript**.
+- Both _frontend_ and _backend_ are written with **TypeScript**.
 
-Frontend also use **MaterialUI** for its interface.
+- _Frontend_ also use **MaterialUI** for its interface.
