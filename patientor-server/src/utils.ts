@@ -1,27 +1,34 @@
-import { Gender, NewPatient } from "./types";
+import {
+  Diagnosis,
+  Discharge,
+  Gender,
+  NewEntry,
+  NewPatient,
+  SickLeave,
+} from "./types";
 
 const errorMsg = "Incorrect or missing";
 
-const isString = (text: unknown): text is string => {
-  return typeof text === "string" || text instanceof String;
+const isString = (param: unknown): param is string => {
+  return typeof param === "string" || param instanceof String;
 };
 
-const parseStringField = (objField: unknown, fieldName: string): string => {
-  if (!objField || !isString(objField)) {
-    throw new Error(`${errorMsg} ${fieldName}`);
+const parseStringField = (fieldValue: unknown, fieldName: string): string => {
+  if (!fieldValue || !isString(fieldValue)) {
+    throw new Error(`${errorMsg} ${fieldName} ${fieldValue}`);
   }
-  return objField;
+  return fieldValue;
 };
 
-const isDate = (date: string): boolean => {
-  return Boolean(Date.parse(date));
+const isDate = (param: string): boolean => {
+  return Boolean(Date.parse(param));
 };
 
-const parseDate = (date: unknown): string => {
-  if (!date || !isString(date) || !isDate(date)) {
-    throw new Error(`${errorMsg} the date of birth ${date}`);
+const parseDate = (param: unknown): string => {
+  if (!param || !isString(param) || !isDate(param)) {
+    throw new Error(`${errorMsg} date ${param}`);
   }
-  return date;
+  return param;
 };
 
 const isGender = (param: string): param is Gender => {
@@ -30,31 +37,31 @@ const isGender = (param: string): param is Gender => {
     .includes(param);
 };
 
-const parseGender = (gender: unknown): Gender => {
-  if (!gender || !isString(gender) || !isGender(gender)) {
-    throw new Error(`${errorMsg} gender ${gender}`);
+const parseGender = (param: unknown): Gender => {
+  if (!param || !isString(param) || !isGender(param)) {
+    throw new Error(`${errorMsg} gender ${param}`);
   }
-  return gender;
+  return param;
 };
 
-const toNewPatient = (object: unknown): NewPatient => {
-  if (!object || typeof object !== "object") {
-    throw new Error(`${errorMsg} data`);
+export const parsePatient = (param: unknown): NewPatient => {
+  if (!param || typeof param !== "object") {
+    throw new Error(`${errorMsg} Patient data`);
   }
 
   if (
-    "name" in object &&
-    "ssn" in object &&
-    "dateOfBirth" in object &&
-    "gender" in object &&
-    "occupation" in object
+    "name" in param &&
+    "ssn" in param &&
+    "dateOfBirth" in param &&
+    "gender" in param &&
+    "occupation" in param
   ) {
     const newEntry: NewPatient = {
-      name: parseStringField(object.name, "name"),
-      ssn: parseStringField(object.ssn, "ssn"),
-      occupation: parseStringField(object.occupation, "occupation"),
-      dateOfBirth: parseDate(object.dateOfBirth),
-      gender: parseGender(object.gender),
+      name: parseStringField(param.name, "name"),
+      ssn: parseStringField(param.ssn, "ssn"),
+      occupation: parseStringField(param.occupation, "occupation"),
+      dateOfBirth: parseDate(param.dateOfBirth),
+      gender: parseGender(param.gender),
       entries: [],
     };
     return newEntry;
@@ -62,4 +69,122 @@ const toNewPatient = (object: unknown): NewPatient => {
   throw new Error("Incorrect data: some fields are missing");
 };
 
-export default toNewPatient;
+const isNumber = (param: unknown): param is number => {
+  return typeof param === "number" || param instanceof Number;
+};
+
+const parseHealthCheckRating = (param: unknown): 0 | 1 | 2 | 3 => {
+  if (
+    isNumber(param) &&
+    (param === 0 || param === 1 || param === 2 || param === 3)
+  ) {
+    return param;
+  }
+  throw new Error(`${errorMsg} healthCheckRating ${param}`);
+};
+
+const parseDiagnosisCodes = (param: unknown): Array<Diagnosis["code"]> => {
+  if (!param || typeof param !== "object" || !("diagnosisCodes" in param)) {
+    return [] as Array<Diagnosis["code"]>;
+  }
+  return param.diagnosisCodes as Array<Diagnosis["code"]>;
+};
+
+const parseDischarge = (param: unknown): Discharge | undefined => {
+  if (!param || typeof param !== "object" || !("discharge" in param)) {
+    return undefined;
+  }
+
+  const discharge = param.discharge;
+
+  if (!discharge || typeof discharge !== "object") {
+    throw new Error(`${errorMsg} discharge ${discharge}`);
+  }
+
+  if (
+    !("date" in discharge) ||
+    !isString(discharge.date) ||
+    !isDate(discharge.date)
+  ) {
+    throw new Error(`${errorMsg} discharge date ${discharge}`);
+  }
+
+  if (!("criteria" in discharge) || !isString(discharge.criteria)) {
+    throw new Error(`${errorMsg} discharge criteria ${discharge}`);
+  }
+
+  return {
+    date: discharge.date,
+    criteria: discharge.criteria,
+  };
+};
+
+const parseSickLeave = (param: unknown): SickLeave | undefined => {
+  if (!param || typeof param !== "object" || !("sickLeave" in param)) {
+    return undefined;
+  }
+
+  const sickLeave = param.sickLeave;
+
+  if (!sickLeave || typeof sickLeave !== "object") {
+    throw new Error(`${errorMsg} sickLeave ${sickLeave}`);
+  }
+
+  if (
+    !("startDate" in sickLeave) ||
+    !isString(sickLeave.startDate) ||
+    !isDate(sickLeave.startDate)
+  ) {
+    throw new Error(`${errorMsg} sickLeave startDate ${sickLeave}`);
+  }
+
+  if (
+    !("endDate" in sickLeave) ||
+    !isString(sickLeave.endDate) ||
+    !isDate(sickLeave.endDate)
+  ) {
+    throw new Error(`${errorMsg} sickLeave endDate ${sickLeave}`);
+  }
+
+  return { startDate: sickLeave.startDate, endDate: sickLeave.endDate };
+};
+
+export const parseEntry = (param: unknown): NewEntry => {
+  if (!param || typeof param !== "object") {
+    throw new Error(`${errorMsg} Entry data`);
+  }
+
+  if (!("type" in param)) throw new Error(`${errorMsg} type`);
+  if (!("description" in param)) throw new Error(`${errorMsg} description`);
+  if (!("date" in param)) throw new Error(`${errorMsg} date from Entry`);
+  if (!("specialist" in param)) throw new Error(`${errorMsg} specialist`);
+
+  const baseEntry = {
+    description: parseStringField(param.description, "description"),
+    date: parseDate(param.date),
+    specialist: parseStringField(param.specialist, "specialist"),
+    parseDiagnosisCodes: parseDiagnosisCodes(param),
+  };
+
+  if (param.type === "HealthCheck") {
+    if (!("healthCheckRating" in param))
+      throw new Error(`${errorMsg} healthCheckRating`);
+    return {
+      ...baseEntry,
+      type: "HealthCheck",
+      healthCheckRating: parseHealthCheckRating(param.healthCheckRating),
+    };
+  } else if (param.type === "Hospital") {
+    return { ...baseEntry, type: "Hospital", discharge: parseDischarge(param) };
+  } else if (param.type === "OccupationalHealthcare") {
+    if (!("employerName" in param)) throw new Error(`${errorMsg} employerName`);
+    return {
+      ...baseEntry,
+      type: "OccupationalHealthcare",
+      employerName: parseStringField(param.employerName, "employerName"),
+      sickLeave: parseSickLeave(param),
+    };
+  }
+
+  throw new Error(`${errorMsg} type ${param.type}`);
+};

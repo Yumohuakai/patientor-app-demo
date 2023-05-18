@@ -37,7 +37,7 @@ export interface Discharge {
 
 export interface HospitalEntry extends BaseEntry {
   type: "Hospital";
-  discharge: Discharge;
+  discharge?: Discharge;
 }
 
 export interface SickLeave {
