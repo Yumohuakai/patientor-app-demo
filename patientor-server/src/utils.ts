@@ -49,24 +49,20 @@ export const parsePatient = (param: unknown): NewPatient => {
     throw new Error(`${errorMsg} Patient data`);
   }
 
-  if (
-    "name" in param &&
-    "ssn" in param &&
-    "dateOfBirth" in param &&
-    "gender" in param &&
-    "occupation" in param
-  ) {
-    const newEntry: NewPatient = {
-      name: parseStringField(param.name, "name"),
-      ssn: parseStringField(param.ssn, "ssn"),
-      occupation: parseStringField(param.occupation, "occupation"),
-      dateOfBirth: parseDate(param.dateOfBirth),
-      gender: parseGender(param.gender),
-      entries: [],
-    };
-    return newEntry;
-  }
-  throw new Error("Incorrect data: some fields are missing");
+  if (!("name" in param)) throw new Error(`${errorMsg} name`);
+  if (!("ssn" in param)) throw new Error(`${errorMsg} ssn`);
+  if (!("dateOfBirth" in param)) throw new Error(`${errorMsg} dateOfBirth`);
+  if (!("gender" in param)) throw new Error(`${errorMsg} gender`);
+  if (!("occupation" in param)) throw new Error(`${errorMsg} occupation`);
+
+  return {
+    name: parseStringField(param.name, "name"),
+    ssn: parseStringField(param.ssn, "ssn"),
+    occupation: parseStringField(param.occupation, "occupation"),
+    dateOfBirth: parseDate(param.dateOfBirth),
+    gender: parseGender(param.gender),
+    entries: [],
+  };
 };
 
 const isNumber = (param: unknown): param is number => {
@@ -156,7 +152,7 @@ export const parseEntry = (param: unknown): NewEntry => {
 
   if (!("type" in param)) throw new Error(`${errorMsg} type`);
   if (!("description" in param)) throw new Error(`${errorMsg} description`);
-  if (!("date" in param)) throw new Error(`${errorMsg} date from Entry`);
+  if (!("date" in param)) throw new Error(`${errorMsg} date`);
   if (!("specialist" in param)) throw new Error(`${errorMsg} specialist`);
 
   const baseEntry = {
