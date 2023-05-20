@@ -62,6 +62,25 @@ type UnionOmit<T, K extends string | number | symbol> = T extends unknown
 
 export type NewEntry = UnionOmit<Entry, "id">;
 
+export type NewHealthCheckEntry = Omit<HealthCheckEntry, "id">;
+export type NewHospitalEntry = Omit<HospitalEntry, "id">;
+export type NewOccupationalHealthcareEntry = Omit<
+  OccupationalHealthcareEntry,
+  "id"
+>;
+
+export interface AddEntryModalProps {
+  modalOpen: boolean;
+  onClose: () => void;
+  onSubmit: (values: NewHealthCheckEntry) => void;
+  error?: string;
+}
+
+export interface EntryFormProps {
+  onCancel: () => void;
+  onSubmit: (values: NewHealthCheckEntry) => void;
+}
+
 export interface Patient {
   id: string;
   name: string;
