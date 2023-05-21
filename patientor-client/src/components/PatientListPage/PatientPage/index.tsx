@@ -81,26 +81,6 @@ const PatientPage = () => {
             Add New Entry
           </Button>
           <EntryList entries={patient.entries} />
-          {/* {patient.entries.length !== 0 ? <h3>entries</h3> : null}
-          {patient.entries.map((e) => (
-            <div key={e.id}>
-              <p>
-                {e.date} {e.description}
-              </p>
-              {e.diagnosisCodes ? (
-                <ul>
-                  {e.diagnosisCodes.map((d) => (
-                    <li key={d}>
-                      {d}{" "}
-                      {diagnoses.find((dia) => dia.code === d)
-                        ? diagnoses.find((dia) => dia.code === d)?.name
-                        : null}
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </div>
-          ))} */}
         </>
       )}
     </div>

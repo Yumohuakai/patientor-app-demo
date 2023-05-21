@@ -1,12 +1,6 @@
 import { useState, SyntheticEvent } from "react";
 import { HospitalEntryFormProps } from "../../../../types";
-import {
-  TextField,
-  // InputLabel, MenuItem, Select,
-  Grid,
-  Button,
-  // SelectChangeEvent
-} from "@mui/material";
+import { TextField, Grid, Button } from "@mui/material";
 
 const HospitalEntryForm = ({ onCancel, onSubmit }: HospitalEntryFormProps) => {
   const [date, setDate] = useState("");
