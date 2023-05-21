@@ -12,14 +12,23 @@ const EntryForm = ({ onCancel, onSubmit }: EntryFormProps) => {
   const [date, setDate] = useState("");
   const [specialist, setSpecialist] = useState("");
   const [description, setDescription] = useState("");
+  const [diagnosisCodes, setDiagnosisCodes] = useState("");
   const [healthCheckRating, setHealthCheckRating] = useState(0);
 
   const addEntry = (event: SyntheticEvent) => {
     event.preventDefault();
+    const codes =
+      diagnosisCodes.trim().length === 0
+        ? []
+        : diagnosisCodes
+            .trim()
+            .split(",")
+            .map((d) => d.trim());
     onSubmit({
       date,
       specialist,
       description,
+      diagnosisCodes: codes,
       healthCheckRating,
       type: "HealthCheck",
     });
@@ -46,6 +55,12 @@ const EntryForm = ({ onCancel, onSubmit }: EntryFormProps) => {
           fullWidth
           value={description}
           onChange={({ target }) => setDescription(target.value)}
+        />
+        <TextField
+          label="Diagnosis Code(s)"
+          fullWidth
+          value={diagnosisCodes}
+          onChange={({ target }) => setDiagnosisCodes(target.value)}
         />
         <TextField
           label="healthCheckRating"
