@@ -159,7 +159,7 @@ export const parseEntry = (param: unknown): NewEntry => {
     description: parseStringField(param.description, "description"),
     date: parseDateField(param.date, "date"),
     specialist: parseStringField(param.specialist, "specialist"),
-    parseDiagnosisCodes: parseDiagnosisCodes(param),
+    diagnosisCodes: parseDiagnosisCodes(param),
   };
 
   if (param.type === "HealthCheck") {
