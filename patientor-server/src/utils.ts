@@ -24,11 +24,11 @@ const isDate = (param: string): boolean => {
   return Boolean(Date.parse(param));
 };
 
-const parseDate = (param: unknown): string => {
-  if (!param || !isString(param) || !isDate(param)) {
-    throw new Error(`${errorMsg} date ${param}`);
+const parseDateField = (fieldValue: unknown, fieldName: string): string => {
+  if (!fieldValue || !isString(fieldValue) || !isDate(fieldValue)) {
+    throw new Error(`${errorMsg} ${fieldName} ${fieldValue}`);
   }
-  return param;
+  return fieldValue;
 };
 
 const isGender = (param: string): param is Gender => {
@@ -59,7 +59,7 @@ export const parsePatient = (param: unknown): NewPatient => {
     name: parseStringField(param.name, "name"),
     ssn: parseStringField(param.ssn, "ssn"),
     occupation: parseStringField(param.occupation, "occupation"),
-    dateOfBirth: parseDate(param.dateOfBirth),
+    dateOfBirth: parseDateField(param.dateOfBirth, "dateOfBirth"),
     gender: parseGender(param.gender),
     entries: [],
   };
@@ -157,7 +157,7 @@ export const parseEntry = (param: unknown): NewEntry => {
 
   const baseEntry = {
     description: parseStringField(param.description, "description"),
-    date: parseDate(param.date),
+    date: parseDateField(param.date, "date"),
     specialist: parseStringField(param.specialist, "specialist"),
     parseDiagnosisCodes: parseDiagnosisCodes(param),
   };
