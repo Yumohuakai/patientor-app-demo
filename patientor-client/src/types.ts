@@ -56,11 +56,39 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
 
-type UnionOmit<T, K extends string | number | symbol> = T extends unknown
-  ? Omit<T, K>
-  : never;
+// type UnionOmit<T, K extends string | number | symbol> = T extends unknown
+//   ? Omit<T, K>
+//   : never;
 
-export type NewEntry = UnionOmit<Entry, "id">;
+// export type NewEntry = UnionOmit<Entry, "id">;
+
+export enum EntryType {
+  HealthCheck = "HealthCheck",
+  Hospital = "Hospital",
+  OccupationalHealthcare = "OccupationalHealthcare",
+}
+
+export interface EntryTypeOption {
+  value: EntryType;
+  label: string;
+}
+
+export type NewEntry =
+  | NewHealthCheckEntry
+  | NewHospitalEntry
+  | NewOccupationalHealthcareEntry;
+
+export interface AddEntryModalProps {
+  modalOpen: boolean;
+  onClose: () => void;
+  onSubmit: (values: NewEntry) => void;
+  error?: string;
+}
+
+export interface EntryFormProps {
+  onCancel: () => void;
+  onSubmit: (values: NewEntry) => void;
+}
 
 export type NewHealthCheckEntry = Omit<HealthCheckEntry, "id">;
 export type NewHospitalEntry = Omit<HospitalEntry, "id">;
@@ -69,16 +97,19 @@ export type NewOccupationalHealthcareEntry = Omit<
   "id"
 >;
 
-export interface AddEntryModalProps {
-  modalOpen: boolean;
-  onClose: () => void;
-  onSubmit: (values: NewHealthCheckEntry) => void;
-  error?: string;
-}
-
-export interface EntryFormProps {
+export interface HealthCheckEntryFormProps {
   onCancel: () => void;
   onSubmit: (values: NewHealthCheckEntry) => void;
+}
+
+export interface HospitalEntryFormProps {
+  onCancel: () => void;
+  onSubmit: (values: NewHospitalEntry) => void;
+}
+
+export interface OccupationalHealthcareEntryFormProps {
+  onCancel: () => void;
+  onSubmit: (values: NewOccupationalHealthcareEntry) => void;
 }
 
 export interface Patient {

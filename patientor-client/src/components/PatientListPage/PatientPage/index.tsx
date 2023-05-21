@@ -1,19 +1,26 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button } from "@mui/material";
 import axios from "axios";
-import { Patient, NewHealthCheckEntry } from "../../../types";
+import { Patient, NewEntry } from "../../../types";
 import patientService from "../../../services/patients";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
 import EntryList from "./EntryList";
-import AddEntryModal from "./AddEntryModal/index";
+import { Button } from "@mui/material";
+import AddEntryModal from "./AddEntryModal";
 
 const PatientPage = () => {
   const id = useParams().id;
   const [patient, setPatient] = useState<Patient>();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [error, setError] = useState<string>();
+
+  const openModal = (): void => setModalOpen(true);
+
+  const closeModal = (): void => {
+    setModalOpen(false);
+    setError(undefined);
+  };
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -25,14 +32,7 @@ const PatientPage = () => {
     void fetchPatient();
   }, [id]);
 
-  const openModal = (): void => setModalOpen(true);
-
-  const closeModal = (): void => {
-    setModalOpen(false);
-    setError(undefined);
-  };
-
-  const submitNewEntry = async (values: NewHealthCheckEntry) => {
+  const submitNewEntry = async (values: NewEntry) => {
     if (id) {
       try {
         const updatedPatient = await patientService.addEntry(id, values);
@@ -81,6 +81,26 @@ const PatientPage = () => {
             Add New Entry
           </Button>
           <EntryList entries={patient.entries} />
+          {/* {patient.entries.length !== 0 ? <h3>entries</h3> : null}
+          {patient.entries.map((e) => (
+            <div key={e.id}>
+              <p>
+                {e.date} {e.description}
+              </p>
+              {e.diagnosisCodes ? (
+                <ul>
+                  {e.diagnosisCodes.map((d) => (
+                    <li key={d}>
+                      {d}{" "}
+                      {diagnoses.find((dia) => dia.code === d)
+                        ? diagnoses.find((dia) => dia.code === d)?.name
+                        : null}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          ))} */}
         </>
       )}
     </div>
