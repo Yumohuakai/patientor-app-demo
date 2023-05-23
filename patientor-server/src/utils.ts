@@ -128,23 +128,25 @@ const parseSickLeave = (param: unknown): SickLeave | undefined => {
   const sickLeave = param.sickLeave;
 
   if (!sickLeave || typeof sickLeave !== "object") {
-    throw new Error(`${errorMsg} sickLeave ${sickLeave}`);
+    throw new Error(`${errorMsg} sickLeave`);
   }
 
   if (
     !("startDate" in sickLeave) ||
+    !sickLeave.startDate ||
     !isString(sickLeave.startDate) ||
     !isDate(sickLeave.startDate)
   ) {
-    throw new Error(`${errorMsg} sickLeave startDate ${sickLeave}`);
+    throw new Error(`${errorMsg} sickLeave startDate`);
   }
 
   if (
     !("endDate" in sickLeave) ||
+    !sickLeave.endDate ||
     !isString(sickLeave.endDate) ||
     !isDate(sickLeave.endDate)
   ) {
-    throw new Error(`${errorMsg} sickLeave endDate ${sickLeave}`);
+    throw new Error(`${errorMsg} sickLeave endDate`);
   }
 
   return { startDate: sickLeave.startDate, endDate: sickLeave.endDate };

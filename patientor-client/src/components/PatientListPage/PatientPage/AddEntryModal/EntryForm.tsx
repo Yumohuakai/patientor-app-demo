@@ -135,16 +135,28 @@ const EntryForm = ({ onCancel, onSubmit }: EntryFormProps) => {
       }
     }
 
-    if (entryType === "OccupationalHealthcare")
-      onSubmit({
-        date,
-        specialist,
-        description,
-        diagnosisCodes,
-        employerName,
-        sickLeave: { startDate, endDate },
-        type: "OccupationalHealthcare",
-      });
+    if (entryType === "OccupationalHealthcare") {
+      if (!startDate && !endDate) {
+        onSubmit({
+          date,
+          specialist,
+          description,
+          diagnosisCodes,
+          employerName,
+          type: "OccupationalHealthcare",
+        });
+      } else {
+        onSubmit({
+          date,
+          specialist,
+          description,
+          diagnosisCodes,
+          employerName,
+          sickLeave: { startDate, endDate },
+          type: "OccupationalHealthcare",
+        });
+      }
+    }
   };
 
   const extraFieldsForHealthCheck = () => (
