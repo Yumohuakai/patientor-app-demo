@@ -73,6 +73,16 @@ export interface EntryTypeOption {
   label: string;
 }
 
+export interface HealthCheckRatingOption {
+  value: HealthCheckRating;
+  label: string;
+}
+
+export interface DiagnosisCodeOption {
+  value: string;
+  label: string;
+}
+
 export type NewEntry =
   | NewHealthCheckEntry
   | NewHospitalEntry
