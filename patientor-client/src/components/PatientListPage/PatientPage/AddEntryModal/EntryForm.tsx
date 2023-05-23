@@ -67,11 +67,6 @@ const EntryForm = ({ onCancel, onSubmit }: EntryFormProps) => {
 
   const onDiagnosisCodeChange = (event: SelectChangeEvent<string[]>) => {
     event.preventDefault();
-    // console.log(
-    //   "--------onDiagnosisCodeChange event.target.value: ",
-    //   typeof event.target.value,
-    //   event.target.value
-    // );
     const {
       target: { value },
     } = event;
@@ -98,11 +93,6 @@ const EntryForm = ({ onCancel, onSubmit }: EntryFormProps) => {
     event: SelectChangeEvent<HealthCheckRating>
   ) => {
     event.preventDefault();
-    // console.log(
-    //   "--------typeof event.target.value: ",
-    //   typeof event.target.value,
-    //   event.target.value
-    // );
     if (typeof event.target.value === "number") {
       const value = event.target.value;
       const healthCheckRating = values.find((h) => Number(h) === value);
@@ -124,15 +114,26 @@ const EntryForm = ({ onCancel, onSubmit }: EntryFormProps) => {
         type: "HealthCheck",
       });
 
-    if (entryType === "Hospital")
-      onSubmit({
-        date,
-        specialist,
-        description,
-        diagnosisCodes,
-        discharge: { date: dischargeDate, criteria },
-        type: "Hospital",
-      });
+    if (entryType === "Hospital") {
+      if (!dischargeDate && !criteria) {
+        onSubmit({
+          date,
+          specialist,
+          description,
+          diagnosisCodes,
+          type: "Hospital",
+        });
+      } else {
+        onSubmit({
+          date,
+          specialist,
+          description,
+          diagnosisCodes,
+          discharge: { date: dischargeDate, criteria },
+          type: "Hospital",
+        });
+      }
+    }
 
     if (entryType === "OccupationalHealthcare")
       onSubmit({

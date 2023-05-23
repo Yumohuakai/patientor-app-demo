@@ -15,9 +15,11 @@ const HospitalEntryDetails = ({ entry }: { entry: HospitalEntry }) => {
       {entry.diagnosisCodes ? (
         <DiagnosisList diagnosisCodes={entry.diagnosisCodes} />
       ) : null}
-      <p>
-        <HealingIcon /> {entry.discharge.date} {entry.discharge.criteria}
-      </p>
+      {entry.discharge ? (
+        <p>
+          <HealingIcon /> {entry.discharge.date} {entry.discharge.criteria}
+        </p>
+      ) : null}
       <p>diagnose by {entry.specialist}</p>
     </div>
   );

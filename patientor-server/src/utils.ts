@@ -94,19 +94,24 @@ const parseDischarge = (param: unknown): Discharge | undefined => {
   const discharge = param.discharge;
 
   if (!discharge || typeof discharge !== "object") {
-    throw new Error(`${errorMsg} discharge ${discharge}`);
+    throw new Error(`${errorMsg} discharge`);
   }
 
   if (
     !("date" in discharge) ||
+    !discharge.date ||
     !isString(discharge.date) ||
     !isDate(discharge.date)
   ) {
-    throw new Error(`${errorMsg} discharge date ${discharge}`);
+    throw new Error(`${errorMsg} discharge date`);
   }
 
-  if (!("criteria" in discharge) || !isString(discharge.criteria)) {
-    throw new Error(`${errorMsg} discharge criteria ${discharge}`);
+  if (
+    !("criteria" in discharge) ||
+    !discharge.criteria ||
+    !isString(discharge.criteria)
+  ) {
+    throw new Error(`${errorMsg} discharge criteria`);
   }
 
   return {
