@@ -5,6 +5,7 @@ import { Patient, NewEntry } from "../../../types";
 import patientService from "../../../services/patients";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
+import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import EntryList from "./EntryList";
 import { Button } from "@mui/material";
 import AddEntryModal from "./AddEntryModal";
@@ -63,11 +64,11 @@ const PatientPage = () => {
         <>
           <h1>
             {patient.name}{" "}
-            {patient.gender.toString() === "female" ? (
-              <FemaleIcon />
-            ) : (
-              <MaleIcon />
-            )}
+            {patient.gender.toString() === "female" ? <FemaleIcon /> : null}
+            {patient.gender.toString() === "male" ? <MaleIcon /> : null}
+            {patient.gender.toString() === "other" ? (
+              <PanoramaFishEyeIcon />
+            ) : null}
           </h1>
           <p>ssn: {patient.ssn}</p>
           <p>occupation: {patient.occupation}</p>
