@@ -39,6 +39,7 @@ const PatientPage = () => {
         const updatedPatient = await patientService.addEntry(id, values);
         setPatient(updatedPatient);
         setModalOpen(false);
+        setError(undefined);
       } catch (e: unknown) {
         if (axios.isAxiosError(e)) {
           if (e?.response?.data && typeof e?.response?.data === "string") {
