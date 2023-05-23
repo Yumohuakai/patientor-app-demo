@@ -16,7 +16,7 @@ const AddEntryModal = ({
   error,
 }: AddEntryModalProps) => {
   return (
-    <Dialog fullWidth={true} open={modalOpen} onClose={() => onClose()}>
+    <Dialog fullWidth={true} open={modalOpen} onClose={onClose}>
       <DialogTitle>Add a new entry</DialogTitle>
       <Divider />
       <DialogContent>
