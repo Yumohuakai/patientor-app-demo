@@ -7,7 +7,7 @@ import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import EntryList from "./EntryList";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import AddEntryModal from "./AddEntryModal";
 
 const PatientPage = () => {
@@ -65,10 +65,29 @@ const PatientPage = () => {
         <>
           <h1>
             {patient.name}{" "}
-            {patient.gender.toString() === "female" ? <FemaleIcon /> : null}
-            {patient.gender.toString() === "male" ? <MaleIcon /> : null}
+            {patient.gender.toString() === "female" ? (
+              <Tooltip
+                title={`Gender: ${patient.gender.toString()}`}
+                placement="right-start"
+              >
+                <FemaleIcon />
+              </Tooltip>
+            ) : null}
+            {patient.gender.toString() === "male" ? (
+              <Tooltip
+                title={`Gender: ${patient.gender.toString()}`}
+                placement="right-start"
+              >
+                <MaleIcon />
+              </Tooltip>
+            ) : null}
             {patient.gender.toString() === "other" ? (
-              <PanoramaFishEyeIcon />
+              <Tooltip
+                title={`Gender: ${patient.gender.toString()}`}
+                placement="right-start"
+              >
+                <PanoramaFishEyeIcon />
+              </Tooltip>
             ) : null}
           </h1>
           <p>ssn: {patient.ssn}</p>

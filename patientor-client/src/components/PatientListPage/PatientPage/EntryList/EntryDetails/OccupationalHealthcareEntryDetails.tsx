@@ -1,5 +1,6 @@
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
+import { Tooltip } from "@mui/material";
 import { OccupationalHealthcareEntry } from "../../../../../types";
 import DiagnosisList from "./DiagnosisList";
 
@@ -11,7 +12,13 @@ const OccupationalHealthcareEntryDetails = ({
   return (
     <div className="entry">
       <p>
-        {entry.date} <BusinessCenterIcon /> <i>{entry.employerName}</i>
+        {entry.date}{" "}
+        <Tooltip title="Occupational Healthcare Entry" placement="top-start">
+          <BusinessCenterIcon />
+        </Tooltip>{" "}
+        <Tooltip title="Employer Name" placement="right-start">
+          <i>{entry.employerName}</i>
+        </Tooltip>
       </p>
       <p>
         <i>{entry.description}</i>
@@ -19,7 +26,9 @@ const OccupationalHealthcareEntryDetails = ({
       {entry.sickLeave ? (
         <p>
           {entry.sickLeave.startDate} ~ {entry.sickLeave.endDate}{" "}
-          <MedicationLiquidIcon />
+          <Tooltip title="Sick Leave Day(s)" placement="right-start">
+            <MedicationLiquidIcon />
+          </Tooltip>
         </p>
       ) : null}
       {entry.diagnosisCodes ? (

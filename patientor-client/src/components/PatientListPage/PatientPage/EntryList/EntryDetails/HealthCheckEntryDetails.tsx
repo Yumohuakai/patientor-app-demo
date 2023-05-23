@@ -2,7 +2,7 @@ import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { pink, yellow, green, orange } from "@mui/material/colors";
 import { HealthCheckRating, HealthCheckEntry } from "../../../../../types";
-import { SvgIconProps } from "@mui/material";
+import { SvgIconProps, Tooltip } from "@mui/material";
 import DiagnosisList from "./DiagnosisList";
 
 const HealthCheckEntryDetails = ({ entry }: { entry: HealthCheckEntry }) => {
@@ -11,13 +11,32 @@ const HealthCheckEntryDetails = ({ entry }: { entry: HealthCheckEntry }) => {
   ): React.ReactElement<SvgIconProps> | null => {
     switch (rating) {
       case 0:
-        return <FavoriteIcon sx={{ color: green[500] }} />;
+        return (
+          <Tooltip title="Health check rate: Healthy" placement="right-start">
+            <FavoriteIcon sx={{ color: green[500] }} />
+          </Tooltip>
+        );
       case 1:
-        return <FavoriteIcon sx={{ color: yellow[500] }} />;
+        return (
+          <Tooltip title="Health check rate: Low Risk" placement="right-start">
+            <FavoriteIcon sx={{ color: yellow[500] }} />
+          </Tooltip>
+        );
       case 2:
-        return <FavoriteIcon sx={{ color: orange[500] }} />;
+        return (
+          <Tooltip title="Health check rate: High Risk" placement="right-start">
+            <FavoriteIcon sx={{ color: orange[500] }} />
+          </Tooltip>
+        );
       case 3:
-        return <FavoriteIcon sx={{ color: pink[500] }} />;
+        return (
+          <Tooltip
+            title="Health check rate: Critical Risk"
+            placement="right-start"
+          >
+            <FavoriteIcon sx={{ color: pink[500] }} />
+          </Tooltip>
+        );
     }
     return null;
   };
@@ -25,7 +44,10 @@ const HealthCheckEntryDetails = ({ entry }: { entry: HealthCheckEntry }) => {
   return (
     <div className="entry">
       <p>
-        {entry.date} <MedicalInformationIcon />
+        {entry.date}{" "}
+        <Tooltip title="Health Check Entry" placement="right-start">
+          <MedicalInformationIcon />
+        </Tooltip>
       </p>
       <p>
         <i>{entry.description}</i>
